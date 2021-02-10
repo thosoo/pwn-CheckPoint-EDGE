@@ -313,7 +313,7 @@ Environment size: 1380/131068 bytes
 
 ## Booting Sofaware
 
-Booting the software firmware can be achieved by executing `sofaware_start`. It seems that the firmware is stored in GZIP format twice on NAND.
+Booting the software firmware can be achieved by executing `sofaware_start`. It seems that the firmware is stored in GZIP format twice on NAND. The NAND is hiding behind a VNAND driver, which needs to be initialised first.
 
 ```
 Sbox4_cm# sofaware_start
@@ -673,5 +673,276 @@ test_br: port 1(eth0) entering forwarding state
         Welcome to SofaWare SBOX4
 
 (none) login: 
+```
+
+## OpenWRT
+
+But.. can it boot OpenWRT? Yes, it should.
+
+At first, I was not able to boot via `tftpboot`, because I got `checksum bad`errors all over the place, even after rebooting my routers and switches, these issues remained. The USB port is also not available inside U-Boot. So I just transferred the initramfs via serial console and booted from that.
+
+```
+ sudo ./uartboot.script
+loading file
+Warning: terminal type unknown: "xterm-kitty"
+Fullscreen file transfer display disabled.
+SF
+X to cancel file,  CR to resend current packet
+Z to cancel group, A for status report
+E to send Error packet, Ctrl-C to quit immediately: 
+initramfs.bin => initramfs.bin
+Size: 14663952, Type: binary
+    File   Percent       Packet
+    Bytes  Done     CPS  Length
+ 14663952  100%    6706       6  [OK]
+ZB
+## Total Size      = 0x00dfc110 = 14663952 Bytes
+## Start Addr      = 0x05700000
+Sbox4_cm# running kernel
+Connecting to /dev/tty.usbserial-A600eZVP, speed 115200
+ Escape character: Ctrl-\ (ASCII 28, FS): enabled
+Type the escape character followed by C to get back,
+or followed by ? to see other options.
+----------------------------------------------------
+bootoctlinux
+ELF file is 64 bit
+Attempting to allocate memory for ELF segment: addr: 0xffffffff81100000 (adjusted to: 0x0000000001100000), size 0x1f4a220
+Allocated memory for ELF segment: addr: 0xffffffff81100000, size 0x1f4a220
+Processing PHDR 0
+  Loading dfab30 bytes at ffffffff81100000
+  Clearing 114f6f0 bytes at ffffffff81efab30
+## Loading Linux kernel with entry point: 0xffffffff8162eb60 ...
+** SofaWare boot information (core 0) ** 
+* license (blob):           "REDACTED"
+* activation key (blob):    "REDACTED"
+* vendor mask (blob):       0x2000
+* pn (blob):                "REDACTED"
+* sn (blob):                ""
+* SFP ports (blob):         0x0
+* USB ports (blob):         0x1
+* Switch ports (blob):      0x4
+* WLAN Region (blob):         "WORLD"
+* DSL Modem (blob):                "Yes"
+* ANNEX (blob):                "B"
+* extra params 1 (blob):    ""
+* extra params 2 (blob):    ""
+* extra params 3 (blob):    ""
+* extra params 4 (blob):    ""
+* extra params 5 (blob):    ""
+* extra params 6 (blob):    ""
+* extra params 7 (blob):    ""
+* extra params 8 (blob):    ""
+* default ip:               192.168.10.1
+* sub model:                0x0
+* image version:            ""
+* firmware file name:       ""
+* kernel image size:        0
+* firmware image offset:           0
+* romdisk offset:           168
+* image crc:                0x0
+* loader ver:               15
+* test mode:                0
+* debug:                    1
+* safe@ user source:        1
+* safe@ kernel source:      1
+* default lan ip:           ""
+* default wan ip:           ""
+* debug host ip:            ""
+* debug host port:          "0"
+**************************************** 
+Bootloader: Done loading app on coremask: 0x1
+[    0.000000] Linux version 4.14.180 (builder@buildhost) (gcc version 7.5.0 (OpenWrt GCC 7.5.0 r11063-85e04e9f46)) #0 SMP Sat May 16 18:32:20 2020
+[    0.000000] CVMSEG size: 2 cache lines (256 bytes)
+[    0.000000] bootconsole [early0] enabled
+[    0.000000] CPU0 revision is: 000d0601 (Cavium Octeon+)
+[    0.000000] Checking for the multiply/shift bug... no.
+[    0.000000] Checking for the daddiu bug... no.
+[    0.000000] Determined physical RAM map:
+[    0.000000]  memory: 0000000004c00000 @ 0000000003100000 (usable)
+[    0.000000]  memory: 0000000001f4a220 @ 0000000001100000 (usable)
+[    0.000000] Wasting 243712 bytes for tracking 4352 unused pages
+[    0.000000] Initrd not found or empty - disabling initrd
+[    0.000000] cvmx_helper_board_get_mii_address: Unknown board type 20011
+[    0.000000] cvmx_helper_board_get_mii_address: Unknown board type 20011
+[    0.000000] cvmx_helper_board_get_mii_address: Unknown board type 20011
+[    0.000000] Using internal Device Tree.
+[    0.000000] software IO TLB: mapped [mem 0x0310b000-0x0314b000] (0MB)
+[    0.000000] Primary instruction cache 32kB, virtually tagged, 4 way, 64 sets, linesize 128 bytes.
+[    0.000000] Primary data cache 16kB, 64-way, 2 sets, linesize 128 bytes.
+[    0.000000] Zone ranges:
+[    0.000000]   DMA32    [mem 0x0000000000000000-0x00000000efffffff]
+[    0.000000]   Normal   empty
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x0000000000000000-0x0000000003049fff]
+[    0.000000]   node   0: [mem 0x0000000003100000-0x0000000007cfffff]
+[    0.000000] Initmem setup node 0 [mem 0x0000000000000000-0x0000000007cfffff]
+[    0.000000] random: get_random_bytes called from 0xffffffff817586d8 with crng_init=0
+[    0.000000] percpu: Embedded 18 pages/cpu s35632 r8192 d29904 u73728
+[    0.000000] Built 1 zonelists, mobility grouping on.  Total pages: 31380
+[    0.000000] Kernel command line:  bootoctlinux console=ttyS1,115200
+[    0.000000] PID hash table entries: 512 (order: 0, 4096 bytes)
+[    0.000000] Dentry cache hash table entries: 16384 (order: 5, 131072 bytes)
+[    0.000000] Inode-cache hash table entries: 8192 (order: 4, 65536 bytes)
+[    0.000000] Memory: 73592K/127272K available (5336K kernel code, 338K rwdata, 808K rodata, 8864K init, 16680K bss, 53680K reserved, 0K cma-reserved)
+[    0.000000] SLUB: HWalign=128, Order=0-3, MinObjects=0, CPUs=1, Nodes=1
+[    0.000000] Hierarchical RCU implementation.
+[    0.000000] 	CONFIG_RCU_FANOUT set to non-default value of 32
+[    0.000000] 	RCU restricting CPUs from NR_CPUS=16 to nr_cpu_ids=1.
+[    0.000000] RCU: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=1
+[    0.000000] NR_IRQS: 127
+[ 2610.873231] clocksource: OCTEON_CVMCOUNT: mask: 0xffffffffffffffff max_cycles: 0xe6a171a037, max_idle_ns: 881590485102 ns
+[ 2610.884090] Calibrating delay loop (skipped) preset value.. 1000.00 BogoMIPS (lpj=2000000)
+[ 2610.892476] pid_max: default: 32768 minimum: 301
+[ 2610.897097] Mount-cache hash table entries: 512 (order: 0, 4096 bytes)
+[ 2610.903489] Mountpoint-cache hash table entries: 512 (order: 0, 4096 bytes)
+[ 2610.911175] Checking for the daddi bug... no.
+[ 2610.916477] Hierarchical SRCU implementation.
+[ 2610.921484] smp: Bringing up secondary CPUs ...
+[ 2610.925908] smp: Brought up 1 node, 1 CPU
+[ 2610.933616] clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 7645041785100000 ns
+[ 2610.943262] futex hash table entries: 256 (order: 3, 32768 bytes)
+[ 2610.950523] NET: Registered protocol family 16
+[ 2610.959830] Enabling Octeon big bar support
+[ 2610.969914] PCI Status: PCI 32-bit
+[ 2610.974171] PCI Clock: 66 MHz
+[ 2611.007303] SCSI subsystem initialized
+[ 2611.011411] usbcore: registered new interface driver usbfs
+[ 2611.016880] usbcore: registered new interface driver hub
+[ 2611.022151] usbcore: registered new device driver usb
+[ 2611.027418] PCI host bridge to bus 0000:00
+[ 2611.031415] pci_bus 0000:00: root bus resource [mem 0x11b00f0000000-0x11b0130000000] (bus address [0xf0000000-0x130000000])
+[ 2611.042474] pci_bus 0000:00: root bus resource [io  0x4000-0xffffffff]
+[ 2611.048975] pci_bus 0000:00: root bus resource [??? 0x00000000 flags 0x0]
+[ 2611.055741] pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
+[ 2611.063749] pci 0000:00:00.0: enabling Extended Tags
+[ 2611.068590] pci 0000:00:00.0: Enable PCIe Retrain Link quirk
+[ 2611.074622] pci 0000:00:01.0: enabling Extended Tags
+[ 2611.079478] pci 0000:00:01.0: Enable PCIe Retrain Link quirk
+[ 2611.085437] pci 0000:00:00.0: bridge configuration invalid ([bus 00-00]), reconfiguring
+[ 2611.093322] pci 0000:00:01.0: bridge configuration invalid ([bus 03-03]), reconfiguring
+[ 2611.102183] pci 0000:00:00.0: BAR 8: assigned [mem 0x11b00f0000000-0x11b00f00fffff]
+[ 2611.109733] pci 0000:00:01.0: BAR 8: assigned [mem 0x11b00f0100000-0x11b00f02fffff]
+[ 2611.117332] pci 0000:00:01.0: BAR 9: assigned [mem 0x11b0100000000-0x11b01001fffff 64bit pref]
+[ 2611.125914] pci 0000:00:01.0: BAR 7: assigned [io  0x4000-0x4fff]
+[ 2611.131991] pci 0000:01:00.0: BAR 0: assigned [mem 0x11b00f0000000-0x11b00f000ffff 64bit]
+[ 2611.140144] pci 0000:00:00.0: PCI bridge to [bus 01]
+[ 2611.145078] pci 0000:00:00.0:   bridge window [mem 0x11b00f0000000-0x11b00f00fffff]
+[ 2611.152709] pci 0000:00:01.0: PCI bridge to [bus 02]
+[ 2611.157649] pci 0000:00:01.0:   bridge window [io  0x4000-0x4fff]
+[ 2611.163720] pci 0000:00:01.0:   bridge window [mem 0x11b00f0100000-0x11b00f02fffff]
+[ 2611.171351] pci 0000:00:01.0:   bridge window [mem 0x11b0100000000-0x11b01001fffff 64bit pref]
+[ 2611.185939] clocksource: Switched to clocksource OCTEON_CVMCOUNT
+[ 2611.193011] NET: Registered protocol family 2
+[ 2611.198152] TCP established hash table entries: 1024 (order: 1, 8192 bytes)
+[ 2611.205041] TCP bind hash table entries: 1024 (order: 3, 32768 bytes)
+[ 2611.211430] TCP: Hash tables configured (established 1024 bind 1024)
+[ 2611.217910] UDP hash table entries: 256 (order: 2, 24576 bytes)
+[ 2611.223740] UDP-Lite hash table entries: 256 (order: 2, 24576 bytes)
+[ 2611.230296] NET: Registered protocol family 1
+[ 2611.415111] Crashlog allocated RAM at address 0x3f00000
+[ 2611.422619] workingset: timestamp_bits=62 max_order=15 bucket_order=0
+[ 2611.445917] squashfs: version 4.0 (2009/01/31) Phillip Lougher
+[ 2611.451922] jffs2: version 2.2 (NAND) (SUMMARY) (LZMA) (RTIME) (CMODE_PRIORITY) (c) 2001-2006 Red Hat, Inc.
+[ 2611.468926] io scheduler noop registered
+[ 2611.472809] io scheduler deadline registered (default)
+[ 2611.478551] octeon_gpio 1070000000800.gpio-controller: OCTEON GPIO driver probed.
+[ 2611.486404] Serial: 8250/16550 driver, 16 ports, IRQ sharing enabled
+[ 2611.495660] 1180000000800.serial: ttyS0 at MMIO 0x1180000000800 (irq = 41, base_baud = 31250000) is a OCTEON
+[ 2611.506025] 1180000000c00.serial: ttyS1 at MMIO 0x1180000000c00 (irq = 42, base_baud = 31250000) is a OCTEON
+[ 2611.515778] console [ttyS1] enabled
+[ 2611.515778] console [ttyS1] enabled
+[ 2611.522660] bootconsole [early0] disabled
+[ 2611.522660] bootconsole [early0] disabled
+[ 2611.531143] octeon_rng octeon_rng: Octeon Random Number Generator
+[ 2611.549441] loop: module loaded
+[ 2611.553395] of-flash 1f400000.nor: Can't get bank width from device tree
+[ 2611.560550] libphy: mdio_octeon: probed
+[ 2611.564472] mdio_octeon 1180000001800.mdio: Probed
+[ 2611.569691] libphy: Fixed MDIO Bus: probed
+[ 2611.574034] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[ 2611.580620] ehci-pci: EHCI PCI platform driver
+[ 2611.585198] ehci-platform: EHCI generic platform driver
+[ 2611.590685] ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+[ 2611.596953] ohci-platform: OHCI generic platform driver
+[ 2611.602524] usbcore: registered new interface driver usb-storage
+[ 2611.608645] octeon_wdt: Initial granularity 5 Sec
+[ 2611.623645] Interface 0 has 3 ports (RGMII)
+[ 2611.632014] octeon-hcd 16f0010000000.usbc: controller reset failed (gintsts=0x7500dc6a) - retrying
+[ 2611.759041] octeon-hcd 16f0010000000.usbc: controller reset failed (gintsts=0x7500dc6a) - retrying
+[ 2611.887030] octeon-hcd 16f0010000000.usbc: controller reset failed (gintsts=0x7500dc6a) - retrying
+[ 2612.015027] octeon-hcd 16f0010000000.usbc: controller reset failed (gintsts=0x7500dc6a) - retrying
+[ 2612.077797] random: fast init done
+[ 2612.143027] octeon-hcd 16f0010000000.usbc: controller reset failed (gintsts=0x7500dc6a) - retrying
+[ 2612.271055] octeon-hcd: probe of 16f0010000000.usbc failed with error -1
+[ 2612.278871] NET: Registered protocol family 10
+[ 2612.286587] Segment Routing with IPv6
+[ 2612.290444] NET: Registered protocol family 17
+[ 2612.295032] bridge: filtering via arp/ip/ip6tables is no longer available by default. Update your scripts to load br_netfilter if you need this.
+[ 2612.308042] 8021q: 802.1Q VLAN Support v1.8
+[ 2612.312497] Bootbus flash: Setting flash for 2MB flash at 0x1fa00000
+[ 2612.319049] phys_mapped_flash: Found 1 x16 devices at 0x0 in 8-bit bank. Manufacturer ID 0x000001 Chip ID 0x000049
+[ 2612.329436] Amd/Fujitsu Extended Query Table at 0x0040
+[ 2612.334636]   Amd/Fujitsu Extended Query version 1.3.
+[ 2612.339722] number of CFI chips: 1
+[ 2612.347160] OF: fdt: not creating '/sys/firmware/fdt': CRC check failed
+[ 2612.361678] Freeing unused kernel memory: 8864K
+[ 2612.366283] This architecture does not have kernel memory protection.
+[ 2612.388489] init: Console is alive
+[ 2612.392355] init: - watchdog -
+[ 2612.409537] kmodloader: loading kernel modules from /etc/modules-boot.d/*
+[ 2612.416880] kmodloader: done loading kernel modules from /etc/modules-boot.d/*
+[ 2612.426941] init: - preinit -
+[ 2612.632175] random: jshn: uninitialized urandom read (4 bytes read)
+[ 2612.684740] random: jshn: uninitialized urandom read (4 bytes read)
+[ 2612.725616] random: jshn: uninitialized urandom read (4 bytes read)
+[ 2612.761975] IPv6: ADDRCONF(NETDEV_UP): eth0: link is not ready
+Press the [f] key and hit [enter] to enter failsafe mode
+Press the [1], [2], [3] or [4] key and hit [enter] to select the debug level
+[ 2615.917630] procd: - early -
+[ 2615.920976] procd: - watchdog -
+[ 2616.509698] procd: - watchdog -
+[ 2616.513372] procd: - ubus -
+[ 2616.522784] random: ubusd: uninitialized urandom read (4 bytes read)
+[ 2616.566839] random: ubusd: uninitialized urandom read (4 bytes read)
+[ 2616.573755] random: ubusd: uninitialized urandom read (4 bytes read)
+[ 2616.581636] procd: - init -
+Please press Enter to activate this console.
+[ 2617.046694] kmodloader: loading kernel modules from /etc/modules.d/*
+[ 2617.067481] ip6_tables: (C) 2000-2006 Netfilter Core Team
+[ 2617.080549] urngd: v1.0.2 started.
+[ 2617.096691] ip_tables: (C) 2000-2006 Netfilter Core Team
+[ 2617.116764] nf_conntrack version 0.5.0 (1024 buckets, 4096 max)
+[ 2617.218242] xt_time: kernel timezone is -0000
+[ 2617.240533] PPP generic driver version 2.4.2
+[ 2617.254736] NET: Registered protocol family 24
+[ 2617.271625] kmodloader: done loading kernel modules from /etc/modules.d/*
+[ 2617.297785] random: crng init done
+[ 2617.301277] random: 4 urandom warning(s) missed due to ratelimiting
+[ 2625.093549] br-lan: port 1(eth0) entered blocking state
+[ 2625.098889] br-lan: port 1(eth0) entered disabled state
+[ 2625.104543] device eth0 entered promiscuous mode
+[ 2625.166123] IPv6: ADDRCONF(NETDEV_UP): br-lan: link is not ready
+[ 2625.254034] IPv6: ADDRCONF(NETDEV_UP): eth1: link is not ready
+
+
+
+BusyBox v1.30.1 () built-in shell (ash)
+
+  _______                     ________        __
+ |       |.-----.-----.-----.|  |  |  |.----.|  |_
+ |   -   ||  _  |  -__|     ||  |  |  ||   _||   _|
+ |_______||   __|_____|__|__||________||__|  |____|
+          |__| W I R E L E S S   F R E E D O M
+ -----------------------------------------------------
+ OpenWrt 19.07.3, r11063-85e04e9f46
+ -----------------------------------------------------
+=== WARNING! =====================================
+There is no root password defined on this device!
+Use the "passwd" command to set up a new password
+in order to prevent unauthorized SSH logins.
+--------------------------------------------------
+root@OpenWrt:/# 
+
 ```
 
