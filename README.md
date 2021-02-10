@@ -24,20 +24,32 @@
 # pwn-CheckPoint-EDGE
 This project is about taking control over the Check Point UTM-1 EDGE Series.
 
-The Check Point UTM-1 EDGE Series series of devices has a Octeon Plus CN5010-SCP Processor
-with 128 MB RAM.These devices are still perfectly usable, however, Check Point has
-deprecated them long ago. With their shady business model (*service plans for firmware updates*)
-these devices run age old firmware. Additionally, they ignore emails when requesting
-source code to GPL licensed code, such as U-Boot. (**Argghh GPL Violators..**)
+The Check Point UTM-1 EDGE Series series of devices has a Octeon Plus CN5010-SCP Processor with 128 MB RAM.These devices are still perfectly usable, however, Check Point has deprecated them long ago. With their shady business model (*service plans for firmware updates*) these devices run age old firmware. Additionally, they ignore emails when requesting source code to GPL licensed code, such as U-Boot. (**Argghh GPL Violators..**)
+
+## Chipset
+
+This applies to the UTM-1 EDGE NW ADSL:
+
+| Chip                          | Purpose            |
+| ----------------------------- | ------------------ |
+| Cavium Octeon Plus CN5010-SCP | Processor          |
+| Marvell 98DX-LKJ1             | Switch             |
+| Marvell 88E1240-TAH2          | WAN                |
+| Marvell 88E1111-BAB1          | WAN?               |
+| Spansion S29AL016J70TFI02     | Flash              |
+| ST 3243EC                     | RS-232             |
+| NEC (uPD)720114               | USB 2.0            |
+| DS1337                        | RTC                |
+| w83l786g                      | Temperature sensor |
+| Pericom PI7C9X                | PCI-E Controller   |
+| Atheros AR5B97                | Wireless           |
+| Microchip 24CO2               | EEPROM             |
 
 ## Getting the serial port
 
-On all of the models, there is a serial port on the outside of the device. This serial port does
-only deliver some no so useful diagnostics and are kind of worthless. You can not get to the bootloader
-and can also not get a shell for root login.
+On all of the models, there is a serial port on the outside of the device. This serial port does only deliver some no so useful diagnostics and are kind of worthless. You can not get to the bootloader and can also not get a shell for root login.
 
-A second serialport can be found inside of the device. When connecting to the serialport with *115200* baudrate
-and starting the device, you only see a few lines of U-Boot. Then, this serial port goes blank aswell.
+A second serialport can be found inside of the device. When connecting to the serialport with *115200* baudrate and starting the device, you only see a few lines of U-Boot. Then, this serial port goes blank aswell.
 
 ```
 U-Boot 1.1.1  SDK 1.9 (Development build) (Build time: Feb  2 2011 - 12:54:14)
@@ -54,8 +66,7 @@ w83l786g_gpio_io_def emtry
 DRAM:  128 MB
 ```
 
-After some random shorting of pins, the debug pins were found in between the heatsink and the DSL board.
-Shorting them using a jumper/cable results in this serial port staying alive.
+After some random shorting of pins, the debug pins were found in between the heatsink and the DSL board. Shorting them using a jumper/cable results in this serial port staying alive.
 
 Well.., hello!
 
