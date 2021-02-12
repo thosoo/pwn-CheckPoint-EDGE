@@ -24,7 +24,17 @@
 # pwn-CheckPoint-EDGE
 This project is about taking control over the Check Point UTM-1 EDGE Series.
 
-The Check Point UTM-1 EDGE Series series of devices has a Octeon Plus CN5010-SCP Processor with 128 MB RAM.These devices are still perfectly usable, however, Check Point has deprecated them long ago. With their shady business model (*service plans for firmware updates*) these devices run age old firmware. Additionally, they ignore emails when requesting source code to GPL licensed code, such as U-Boot. (**Argghh GPL Violators..**)
+The Check Point UTM-1 EDGE Series series of devices has a Octeon Plus CN5010-SCP Processor with 128 MB RAM.These devices are still perfectly usable, however, Check Point has deprecated them long ago. With their shady business model (*service plans for firmware updates*) these devices run age old firmware. Additionally, they ignore emails when requesting source code to GPL licensed code, su
+
+
+
+ch as U-Boot. (**Argghh GPL Violators..**)
+
+## Table of contents
+
+[TOC]
+
+
 
 ## Chipset
 
@@ -943,6 +953,47 @@ Use the "passwd" command to set up a new password
 in order to prevent unauthorized SSH logins.
 --------------------------------------------------
 root@OpenWrt:/# 
+
+```
+
+## Dumping nand
+
+These are the commands to access the nand from U-Boot
+
+```
+nand    - NAND sub-system
+nand info - show available NAND devices
+nand init - Initialize NAND
+nand device [dev] - show or set current device
+nand read - addr off|partition size
+nand write - addr off|partition size
+    read/write 'size' bytes starting at offset 'off'
+    to/from memory address 'addr', skipping bad blocks.
+nand erase [clean] [off size] - erase 'size' bytes from
+    offset 'off' (entire device if not specified)
+nand bad - show bad blocks
+nand dump[.oob] off - dump page
+nand scrub - really clean NAND erasing bad blocks (UNSAFE)
+nand markbad off - mark bad block at offset (UNSAFE)
+nand biterr off - make a bit error at offset (UNSAFE)
+nand lock [tight] [status]
+    bring nand to lock state or display locked pages
+nand unlock [offset] [size] - unlock section
+```
+
+
+
+```
+setenv dump1 'nand read 0x02800000 0x0 0x1000000; md.b 0x02800000 0x1000000'
+setenv dump2 'nand read 0x02800000 0x1000000 0x1000000; md.b 0x02800000 0x1000000'
+setenv dump3 'nand read 0x02800000 0x2000000 0x1000000; md.b 0x02800000 0x1000000'
+setenv dump4 'nand read 0x02800000 0x3000000 0x1000000; md.b 0x02800000 0x1000000'
+setenv dump5 'nand read 0x02800000 0x3000000 0x1000000; md.b 0x02800000 0x1000000'
+setenv dump6 'nand read 0x02800000 0x4000000 0x1000000; md.b 0x02800000 0x1000000'
+setenv dump7 'nand read 0x02800000 0x5000000 0x1000000; md.b 0x02800000 0x1000000'
+setenv dump8 'nand read 0x02800000 0x6000000 0x1000000; md.b 0x02800000 0x1000000'
+setenv dump9 'nand read 0x02800000 0x7000000 0x1000000; md.b 0x02800000 0x1000000'
+setenv dump_nand 'run dump1; run dump2;run dump3; run dump4; run dump5; run dump6; run dump7; run dump8; run dump9'
 
 ```
 
