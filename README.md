@@ -956,6 +956,18 @@ root@OpenWrt:/#
 
 ```
 
+## Dumping flash
+
+There is 2MB flash memory, where U-Boot and a failsafe U-Boot resides.
+
+It can be dumped using the following command:
+
+```
+md.b 0xbfa00000 0x200000
+```
+
+This results in the memory being displayed on the serial console. The resulting log has to be processed using the [uboot-mdb-dump](https://github.com/gmbnomis/uboot-mdb-dump) script.
+
 ## Dumping nand
 
 These are the commands to access the nand from U-Boot
@@ -994,6 +1006,5 @@ setenv dump7 'nand read 0x02800000 0x5000000 0x1000000; md.b 0x02800000 0x100000
 setenv dump8 'nand read 0x02800000 0x6000000 0x1000000; md.b 0x02800000 0x1000000'
 setenv dump9 'nand read 0x02800000 0x7000000 0x1000000; md.b 0x02800000 0x1000000'
 setenv dump_nand 'run dump1; run dump2;run dump3; run dump4; run dump5; run dump6; run dump7; run dump8; run dump9'
-
 ```
 
