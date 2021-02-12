@@ -28,8 +28,6 @@ The Check Point UTM-1 EDGE Series series of devices has a Octeon Plus CN5010-SCP
 
 ## Table of contents
 
-[TOC]
-
 
 
 ## Chipset
@@ -683,6 +681,8 @@ test_br: port 1(eth0) entering forwarding state
 (none) login: 
 ```
 
+Unfortunately, the root account has a password..
+
 ## OpenWRT
 
 But.. can it boot OpenWRT? Yes, it should.
@@ -984,7 +984,9 @@ Running `strings` on the flash dump, resulted in [this file](./strings-u-boot.tx
 
 ## Dumping nand
 
-These are the commands to access the nand from U-Boot
+As seen in the bootlog, the firmware is stored twice on NAND as a gzipped Archive. On every boot, this archive is verified and extracted.
+
+These are the commands to access the nand from U-Boot.
 
 ```
 nand    - NAND sub-system
@@ -1007,7 +1009,7 @@ nand lock [tight] [status]
 nand unlock [offset] [size] - unlock section
 ```
 
-
+As tftp was not accessible, the nand had to be dumped using the mdb method again. Because the RAM is limited (128 MB) and the NAND having the same size as the RAM, I figured that reading multiple sections would be a better idea. (This will take a day..)
 
 ```
 setenv dump1 'nand read 0x02800000 0x0 0x1000000; md.b 0x02800000 0x1000000'
@@ -1020,5 +1022,268 @@ setenv dump7 'nand read 0x02800000 0x5000000 0x1000000; md.b 0x02800000 0x100000
 setenv dump8 'nand read 0x02800000 0x6000000 0x1000000; md.b 0x02800000 0x1000000'
 setenv dump9 'nand read 0x02800000 0x7000000 0x1000000; md.b 0x02800000 0x1000000'
 setenv dump_nand 'run dump1; run dump2;run dump3; run dump4; run dump5; run dump6; run dump7; run dump8; run dump9'
+run dump_nand
+```
+
+Because the dump is made from multiple chunks, the original mdb script will not work anymore, because the address will not be correct anymore. Therefore, a [modified version has to be used](https://github.com/thosoo/uboot-mdb-dump/blob/master/uboot_mdb_to_image-no_addr_chk.py).
+
+Binwalk the NAND dump revealed the following:
+
+```
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+6160384       0x5E0000        JFFS2 filesystem, big endian
+28994227      0x1BA6AB3       Copyright string: "Copyright 1995-1998 Mark Adler "
+28999009      0x1BA7D61       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 1455 bytes
+28999450      0x1BA7F1A       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 1237 bytes
+28999787      0x1BA806B       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 34 bytes
+28999865      0x1BA80B9       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 238 bytes
+28999954      0x1BA8112       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 1566 bytes
+29000548      0x1BA8364       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 446 bytes
+29000880      0x1BA84B0       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 70 bytes
+29000973      0x1BA850D       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 1003 bytes
+29001410      0x1BA86C2       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 2083 bytes
+29003546      0x1BA8F1A       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 501 bytes
+29003906      0x1BA9082       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 478 bytes
+29004251      0x1BA91DB       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 11754 bytes
+29009768      0x1BAA768       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 266 bytes
+29010070      0x1BAA896       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 14964 bytes
+29015404      0x1BABD6C       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 455 bytes
+29015787      0x1BABEEB       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 5771 bytes
+29017647      0x1BAC62F       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 488 bytes
+29017995      0x1BAC78B       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 478 bytes
+29018337      0x1BAC8E1       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 478 bytes
+29018684      0x1BACA3C       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 1946 bytes
+29019760      0x1BACE70       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 1958 bytes
+29020838      0x1BAD2A6       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 458 bytes
+29021163      0x1BAD3EB       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 815 bytes
+29021667      0x1BAD5E3       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 4641 bytes
+29023264      0x1BADC20       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 11913 bytes
+29028775      0x1BAF1A7       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 264 bytes
+29028985      0x1BAF279       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 516 bytes
+29029359      0x1BAF3EF       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 1425 bytes
+29030134      0x1BAF6F6       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 1254 bytes
+29030841      0x1BAF9B9       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 1124 bytes
+29031520      0x1BAFC60       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 1126 bytes
+29032201      0x1BAFF09       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 1120 bytes
+29032878      0x1BB01AE       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 291 bytes
+29033116      0x1BB029C       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 13494 bytes
+29039402      0x1BB1B2A       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 415932 bytes
+29215141      0x1BDC9A5       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 532 bytes
+29215456      0x1BDCAE0       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 21605 bytes
+29223620      0x1BDEAC4       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 364 bytes
+29223743      0x1BDEB3F       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 354 bytes
+29223867      0x1BDEBBB       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 93 bytes
+29224065      0x1BDEC81       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 1609 bytes
+29224681      0x1BDEEE9       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 172 bytes
+29224860      0x1BDEF9C       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 12040 bytes
+29226017      0x1BDF421       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 12054 bytes
+29227176      0x1BDF8A8       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 12054 bytes
+29228335      0x1BDFD2F       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 12089 bytes
+29229496      0x1BE01B8       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 12054 bytes
+29230648      0x1BE0638       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 205 bytes
+29230769      0x1BE06B1       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 439 bytes
+29230984      0x1BE0788       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 853 bytes
+29231402      0x1BE092A       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 1560 bytes
+29231966      0x1BE0B5E       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 3216 bytes
+29232611      0x1BE0DE3       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 1744 bytes
+29233095      0x1BE0FC7       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 799 bytes
+29233548      0x1BE118C       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 1254 bytes
+29234402      0x1BE14E2       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 4096 bytes
+29236244      0x1BE1C14       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 16896 bytes
+29237136      0x1BE1F90       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 396764 bytes
+29374416      0x1C037D0       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 3818528 bytes
+30410880      0x1D00880       LZMA compressed data, properties: 0x5D, dictionary size: 8388608 bytes, uncompressed size: 298464 bytes
+30933160      0x1D800A8       gzip compressed data, fastest compression, has original file name: "sw_vmlinux.64", from Unix, last modified: 2011-01-20 12:03:08
+34319115      0x20BAB0B       Squashfs filesystem, big endian, version 3.1, size: 8972625 bytes, 2635 inodes, blocksize: 131072 bytes, created: 2011-01-20 12:03:25
+43385000      0x29600A8       gzip compressed data, fastest compression, has original file name: "sw_vmlinux.64", from Unix, last modified: 2011-01-20 12:03:08
+46770955      0x2C9AB0B       Squashfs filesystem, big endian, version 3.1, size: 8972625 bytes, 2635 inodes, blocksize: 131072 bytes, created: 2011-01-20 12:03:25
+67131781      0x4005985       Zlib compressed data, best compression
+67174455      0x4010037       Zlib compressed data, best compression
+67211512      0x40190F8       Zlib compressed data, best compression
+67261534      0x402545E       Zlib compressed data, best compression
+67312390      0x4031B06       Zlib compressed data, best compression
+67358961      0x403D0F1       Zlib compressed data, best compression
+67408604      0x40492DC       Zlib compressed data, best compression
+67464140      0x4056BCC       Zlib compressed data, best compression
+67516466      0x4063832       Zlib compressed data, best compression
+67570781      0x4070C5D       Zlib compressed data, best compression
+67622084      0x407D4C4       Zlib compressed data, best compression
+67670852      0x4089344       Zlib compressed data, best compression
+67727855      0x40971EF       Zlib compressed data, best compression
+67776525      0x40A300D       Zlib compressed data, best compression
+67817125      0x40ACEA5       Zlib compressed data, best compression
+67858405      0x40B6FE5       Zlib compressed data, best compression
+67897152      0x40C0740       Zlib compressed data, best compression
+67946166      0x40CC6B6       Zlib compressed data, best compression
+68001311      0x40D9E1F       Zlib compressed data, best compression
+68034846      0x40E211E       Zlib compressed data, best compression
+68063388      0x40E909C       Zlib compressed data, best compression
+68078572      0x40ECBEC       Zlib compressed data, best compression
+68096157      0x40F109D       Zlib compressed data, best compression
+68140716      0x40FBEAC       Zlib compressed data, best compression
+68204099      0x410B643       Zlib compressed data, best compression
+68244555      0x411544B       Zlib compressed data, best compression
+68287940      0x411FDC4       Zlib compressed data, best compression
+68307464      0x4124A08       Zlib compressed data, best compression
+68353847      0x412FF37       Zlib compressed data, best compression
+68402772      0x413BE54       Zlib compressed data, best compression
+68448842      0x414724A       Zlib compressed data, best compression
+68497695      0x415311F       Zlib compressed data, best compression
+68544186      0x415E6BA       Zlib compressed data, best compression
+68593751      0x416A857       Zlib compressed data, best compression
+68639969      0x4175CE1       Zlib compressed data, best compression
+68684784      0x4180BF0       Zlib compressed data, best compression
+68738941      0x418DF7D       Zlib compressed data, best compression
+68793689      0x419B559       Zlib compressed data, best compression
+68828356      0x41A3CC4       Zlib compressed data, best compression
+68842355      0x41A7373       Zlib compressed data, best compression
+68866825      0x41AD309       Zlib compressed data, best compression
+68892281      0x41B3679       Zlib compressed data, best compression
+68917184      0x41B97C0       Zlib compressed data, best compression
+68942687      0x41BFB5F       Zlib compressed data, best compression
+68968198      0x41C5F06       Zlib compressed data, best compression
+68992670      0x41CBE9E       Zlib compressed data, best compression
+69018269      0x41D229D       Zlib compressed data, best compression
+69043202      0x41D8402       Zlib compressed data, best compression
+69068338      0x41DE632       Zlib compressed data, best compression
+69093177      0x41E4739       Zlib compressed data, best compression
+69117785      0x41EA759       Zlib compressed data, best compression
+69142386      0x41F0772       Zlib compressed data, best compression
+69167216      0x41F6870       Zlib compressed data, best compression
+69191498      0x41FC74A       Zlib compressed data, best compression
+69216857      0x4202A59       Zlib compressed data, best compression
+69242323      0x4208DD3       Zlib compressed data, best compression
+69267139      0x420EEC3       Zlib compressed data, best compression
+69293782      0x42156D6       Zlib compressed data, best compression
+69336466      0x421FD92       Zlib compressed data, best compression
+69352956      0x4223DFC       Zlib compressed data, best compression
+69391317      0x422D3D5       Zlib compressed data, best compression
+69447849      0x423B0A9       Zlib compressed data, best compression
+69499774      0x4247B7E       Zlib compressed data, best compression
+69511881      0x424AAC9       Zlib compressed data, best compression
+69552393      0x4254909       Zlib compressed data, best compression
+69599274      0x426002A       Zlib compressed data, best compression
+69651484      0x426CC1C       Zlib compressed data, best compression
+69713919      0x427BFFF       Zlib compressed data, best compression
+69768652      0x42895CC       Zlib compressed data, best compression
+69820404      0x4295FF4       Zlib compressed data, best compression
+69874062      0x42A318E       Zlib compressed data, best compression
+69923473      0x42AF291       Zlib compressed data, best compression
+69972778      0x42BB32A       Zlib compressed data, best compression
+70033531      0x42CA07B       Zlib compressed data, best compression
+70069748      0x42D2DF4       Zlib compressed data, best compression
+70079050      0x42D524A       Zlib compressed data, best compression
+70127131      0x42E0E1B       Zlib compressed data, best compression
+70165408      0x42EA3A0       Zlib compressed data, best compression
+70204515      0x42F3C63       Zlib compressed data, best compression
+70217750      0x42F7016       Zlib compressed data, best compression
+70255703      0x4300457       Zlib compressed data, best compression
+70294992      0x4309DD0       Zlib compressed data, best compression
+70341102      0x43151EE       Zlib compressed data, best compression
+70382991      0x431F58F       Zlib compressed data, best compression
+70413058      0x4326B02       Zlib compressed data, best compression
+70425685      0x4329C55       Zlib compressed data, best compression
+70477926      0x4336866       Zlib compressed data, best compression
+70504843      0x433D18B       Zlib compressed data, best compression
+70563468      0x434B68C       Zlib compressed data, best compression
+70596898      0x4353922       Zlib compressed data, best compression
+70641791      0x435E87F       Zlib compressed data, best compression
+70662282      0x436388A       Zlib compressed data, best compression
+70694727      0x436B747       Zlib compressed data, best compression
+70725577      0x4372FC9       Zlib compressed data, best compression
+70760089      0x437B699       Zlib compressed data, best compression
+70798171      0x4384B5B       Zlib compressed data, best compression
+70851624      0x4391C28       Zlib compressed data, best compression
+70877489      0x4398131       Zlib compressed data, best compression
+70925639      0x43A3D47       Zlib compressed data, best compression
+70963440      0x43AD0F0       Zlib compressed data, best compression
+70980992      0x43B1580       Zlib compressed data, best compression
+71036743      0x43BEF47       Zlib compressed data, best compression
+71092854      0x43CCA76       Zlib compressed data, best compression
+71135669      0x43D71B5       Zlib compressed data, best compression
+71175019      0x43E0B6B       Zlib compressed data, best compression
+71215265      0x43EA8A1       Zlib compressed data, best compression
+71242669      0x43F13AD       Zlib compressed data, best compression
+71257947      0x43F4F5B       Zlib compressed data, best compression
+71281561      0x43FAB99       Zlib compressed data, best compression
+71318141      0x4403A7D       Zlib compressed data, best compression
+71372622      0x4410F4E       Zlib compressed data, best compression
+71415108      0x441B544       Zlib compressed data, best compression
+71416077      0x441B90D       Zlib compressed data, best compression
+71471263      0x442909F       Zlib compressed data, best compression
+71486580      0x442CC74       Zlib compressed data, best compression
+71524788      0x44361B4       Zlib compressed data, best compression
+71574105      0x4442259       Zlib compressed data, best compression
+71616037      0x444C625       Zlib compressed data, best compression
+71632715      0x445074B       Zlib compressed data, best compression
+71677562      0x445B67A       Zlib compressed data, best compression
+71703941      0x4461D85       Zlib compressed data, best compression
+71756739      0x446EBC3       Zlib compressed data, best compression
+71783749      0x4475545       Zlib compressed data, best compression
+71822706      0x447ED72       Zlib compressed data, best compression
+71868670      0x448A0FE       Zlib compressed data, best compression
+71916744      0x4495CC8       Zlib compressed data, best compression
+71959858      0x44A0532       Zlib compressed data, best compression
+72006813      0x44ABC9D       Zlib compressed data, best compression
+72054809      0x44B7819       Zlib compressed data, best compression
+72103878      0x44C37C6       Zlib compressed data, best compression
+72143155      0x44CD133       Zlib compressed data, best compression
+72156025      0x44D0379       Zlib compressed data, best compression
+72181173      0x44D65B5       Zlib compressed data, best compression
+72236892      0x44E3F5C       Zlib compressed data, best compression
+72272861      0x44ECBDD       Zlib compressed data, best compression
+72323714      0x44F9282       Zlib compressed data, best compression
+72375164      0x4505B7C       Zlib compressed data, best compression
+72412964      0x450EF24       Zlib compressed data, best compression
+72456663      0x45199D7       Zlib compressed data, best compression
+72466920      0x451C1E8       Zlib compressed data, best compression
+72474335      0x451DEDF       Zlib compressed data, best compression
+72476689      0x451E811       Zlib compressed data, best compression
+72479043      0x451F143       Zlib compressed data, best compression
+72481422      0x451FA8E       Zlib compressed data, best compression
+72483887      0x452042F       Zlib compressed data, best compression
+72486024      0x4520C88       Zlib compressed data, best compression
+72488186      0x45214FA       Zlib compressed data, best compression
+72490654      0x4521E9E       Zlib compressed data, best compression
+72492607      0x452263F       Zlib compressed data, best compression
+72498210      0x4523C22       Zlib compressed data, best compression
+72503589      0x4525125       Zlib compressed data, best compression
+72507912      0x4526208       Zlib compressed data, best compression
+72513010      0x45275F2       Zlib compressed data, best compression
+72513246      0x45276DE       Zlib compressed data, best compression
+72513659      0x452787B       Zlib compressed data, best compression
+72516506      0x452839A       Zlib compressed data, best compression
+72519460      0x4528F24       Zlib compressed data, best compression
+121103070     0x737E2DE       Certificate in DER format (x509 v3), header length: 4, sequence length: 2903
+121103097     0x737E2F9       Certificate in DER format (x509 v3), header length: 4, sequence length: 1949
+121103146     0x737E32A       Certificate in DER format (x509 v3), header length: 4, sequence length: 823
+121104208     0x737E750       Certificate in DER format (x509 v3), header length: 4, sequence length: 762
+121105073     0x737EAB1       Certificate in DER format (x509 v3), header length: 4, sequence length: 900
+124304187     0x768BB3B       Squashfs filesystem, big endian, version 3.1, size: 8981713 bytes, 2636 inodes, blocksize: 131072 bytes, created: 2012-01-05 20:10:01
+```
+
+## Getting root access on the Sofaware system
+
+Looking at U-Boot strings, you can see at the end of the file that there is a `sw_linux_cmdline` string. This suggests, that you can inject commands into the linux command line. Setting the environment variable`setenv sw_linux_cmdline 'init=/bin/sh'` finally gained root access.
+
+```
+Linux version 2.6.27.7-Cavium-Octeon (rapson@apu.sofaware.com) (gcc version 4.3.3 (Cavium Networks Version: 1_9_0 build 80) ) #4 SMP Thu Jan 20 14:03:04 IST 2011
+CVMSEG size: 2 cache lines (256 bytes)
+...
+Kernel command line:  bootoctlinux 0x02800000 numcores=1 mtdparts=phys_mapped_flash:64k@0x7d0000(cfgfile) init=/bin/sh console=ttyS1,115200
+...
+/bin/sh: can't access tty; job control turned off
+/ $ whoami
+root
+/ $ 
+```
+
+
+
+The root account has the following hash in the `/etc/passwd` file.
+
+```
+root:$1$/D0SSg2x$AsNilmZql8dCiqo9hb8MJ/:0:0:root:/root:/bin/sh
 ```
 
