@@ -968,6 +968,22 @@ md.b 0xbfa00000 0x200000
 
 This results in the memory being displayed on the serial console. The resulting log has to be processed using the [uboot-mdb-dump](https://github.com/gmbnomis/uboot-mdb-dump) script.
 
+After processing the flash using binwalk, the two U-Boot versions are revealed.
+
+```
+$ binwalk dump.bin                  
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+239184        0x3A650         U-Boot version string, "U-Boot 1.1.1 (Development build, svnversion: u-boot:exported, exec:exported) (Build time: Feb 11 2011 - 11:42:25)"
+239704        0x3A858         CRC32 polynomial table, big endian
+762464        0xBA260         U-Boot version string, "U-Boot 1.1.1  SDK 1.9 (Development build) (Build time: Feb  2 2011 - 12:54:14)"
+765480        0xBAE28         CRC32 polynomial table, big endian
+
+```
+
+Running `strings` on the flash dump, resulted in [this file](./strings-u-boot.txt).
+
 ## Dumping nand
 
 These are the commands to access the nand from U-Boot
