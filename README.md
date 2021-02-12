@@ -24,11 +24,7 @@
 # pwn-CheckPoint-EDGE
 This project is about taking control over the Check Point UTM-1 EDGE Series.
 
-The Check Point UTM-1 EDGE Series series of devices has a Octeon Plus CN5010-SCP Processor with 128 MB RAM.These devices are still perfectly usable, however, Check Point has deprecated them long ago. With their shady business model (*service plans for firmware updates*) these devices run age old firmware. Additionally, they ignore emails when requesting source code to GPL licensed code, su
-
-
-
-ch as U-Boot. (**Argghh GPL Violators..**)
+The Check Point UTM-1 EDGE Series series of devices has a Octeon Plus CN5010-SCP Processor with 128 MB RAM.These devices are still perfectly usable, however, Check Point has deprecated them long ago. With their shady business model (*service plans for firmware updates*) these devices run age old firmware. Additionally, they ignore emails when requesting source code to GPL licensed code, such as U-Boot. (**Argghh GPL Violators..**)
 
 ## Table of contents
 
@@ -56,6 +52,8 @@ This applies to the UTM-1 EDGE NW ADSL:
 | Microchip 24CO2               | EEPROM             |
 
 ## Getting the serial port
+
+![Board](./images/board.jpg)
 
 On all of the models, there is a serial port on the outside of the device. This serial port does only deliver some no so useful diagnostics and are kind of worthless. You can not get to the bootloader and can also not get a shell for root login.
 
