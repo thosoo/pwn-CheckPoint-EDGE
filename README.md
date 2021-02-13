@@ -24,7 +24,9 @@
 # pwn-CheckPoint-EDGE
 This project is about taking control over the Check Point UTM-1 EDGE Series.
 
-The Check Point UTM-1 EDGE Series series of devices has a Octeon Plus CN5010-SCP Processor with 128 MB RAM.These devices are still perfectly usable, however, Check Point has deprecated them long ago. With their shady business model (*service plans for firmware updates*) these devices run age old firmware. Additionally, they ignore emails when requesting source code to GPL licensed code, such as U-Boot. (**Argghh GPL Violators..**)
+The Check Point UTM-1 EDGE Series series of devices has a Octeon Plus CN5010-SCP Processor with 128 MB RAM. My variant has a 4 port switch, a WAN port, a DSL modem and even boasts a ExpressCard 54 slot. These devices are still perfectly usable, however, Check Point has deprecated them long ago. With their shady business model (*service plans for firmware updates*) these devices run age old firmware. Even their EULA says that [no Product, nor any portion thereof, may be used by or on behalf of,  accessed by, re-sold to, rented to, or distributed to any other party](https://www.checkpoint.com/support-services/software-license-agreement-limited-hardware-warranty/).
+
+Additionally, they ignore emails with ease, when requesting source code to GPL licensed code, such as U-Boot. (**Argghh GPL Violators..**)
 
 ## Table of contents
 
@@ -687,7 +689,7 @@ Unfortunately, the root account has a password..
 
 But.. can it boot OpenWRT? Yes, it should.
 
-At first, I was not able to boot via `tftpboot`, because I got `checksum bad`errors all over the place, even after rebooting my routers and switches, these issues remained. The USB port is also not available inside U-Boot. So I just transferred the initramfs via serial console and booted from that.
+At first, I was not able to boot via `tftpboot`, because I got `checksum bad` errors all over the place, even after rebooting my routers and switches, these issues remained. The USB port is also not available inside U-Boot. So I just transferred the initramfs via serial console and booted from that.
 
 ```
  sudo ./uartboot.script
@@ -1267,7 +1269,10 @@ DECIMAL       HEXADECIMAL     DESCRIPTION
 
 Looking at U-Boot strings, you can see at the end of the file that there is a `sw_linux_cmdline` string. This suggests, that you can inject commands into the linux command line. Setting the environment variable`setenv sw_linux_cmdline 'init=/bin/sh'` finally gained root access.
 
-```
+```sh
+Sbox4_cm# sw_linux_cmdline 'init=/bin/sh'
+Sbox4_cm# sofaware_start
+...
 Linux version 2.6.27.7-Cavium-Octeon (rapson@apu.sofaware.com) (gcc version 4.3.3 (Cavium Networks Version: 1_9_0 build 80) ) #4 SMP Thu Jan 20 14:03:04 IST 2011
 CVMSEG size: 2 cache lines (256 bytes)
 ...
@@ -1279,11 +1284,16 @@ root
 / $ 
 ```
 
-
-
 The root account has the following hash in the `/etc/passwd` file.
 
 ```
 root:$1$/D0SSg2x$AsNilmZql8dCiqo9hb8MJ/:0:0:root:/root:/bin/sh
 ```
 
+Thanks to John, the root password was solved:
+
+```
+Arr0w            (root)
+```
+
+Nice password, Check Point.
