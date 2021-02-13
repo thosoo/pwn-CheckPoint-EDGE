@@ -47,7 +47,7 @@ This applies to the UTM-1 EDGE NW ADSL:
 | NEC (uPD)720114               | USB 2.0            |
 | DS1337                        | RTC                |
 | w83l786g                      | Temperature sensor |
-| Pericom PI7C9X                | PCI-E Controller   |
+| Pericom PI7C9X111SL           | PCI-E Bridge       |
 | Atheros AR5B97                | Wireless           |
 | Microchip 24CO2               | EEPROM             |
 
