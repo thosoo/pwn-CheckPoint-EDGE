@@ -1375,3 +1375,28 @@ erase ?, werase ^W, kill ^U, intr ^C, status ^T
 WelcOme to the OpeNBSDocteon 6.8 installation program.
 (I)nstall, (U)pgrade, (A)utoinstall or (S)hell? 
 ```
+## Porting OpenBSD
+### Ethernet
+
+Mii information:
+```
+Sbox4_cm# mii info
+PHY 0x0D: OUI = 0x5043, Model = 0x0C, Rev = 0x02,  10baseT, HDX
+PHY 0x10: OUI = 0x43FC4, Model = 0x0F, Rev = 0x0F, 100baseT, FDX
+```
+Found in strings:
+```
+e1240 write 0x4 0x3 0x10 0x8808 0xFF0F
+e1240 write 0x5 0x3 0x10 0x8808 0xFF0F
+e1240 write 0x6 0x3 0x10 0x8808 0xFF0F
+e1240 write 0x7 0x3 0x10 0x8808 0xFF0F
+Turn off lan led.
+mii write 0xC 0x19 0x0002
+mii write 0xD 0x19 0x0002
+```
+Therefore the addresses could be:
+```
+eth0 -> 0x0C
+eth1 -> 0x0D
+eth2 -> 0x10
+```
