@@ -1297,3 +1297,81 @@ Arr0w            (root)
 ```
 
 Nice password, Check Point.
+
+## Booting OpenBSD
+
+At first, I thought booting OpenBSD was not possible on this device, as no output was seen after booting the OpenBSD RAMDISK. Then, after checking the external serialport, the following was observed:
+
+```
+INitial setup done, switching cOnsole.
+boOtdesc->descver:7
+boot_desc->desc_size:400
+bootdesc->stack_tOp:0
+bOot_desc->heap_start:0
+boot_desc->heap_end:0
+bootdesc->argc:2
+boot_desc->flags:0xd
+boot_desc->core_mask:0x1
+bootdesc->dram_size:128
+bOot_desc->phymemdesc_addr:0
+bootdesc->debugger_flagaddr:0xa28
+bOot_desc->eclock:500000000
+boot_desc->boot_iNfo_addr:0x1001f0
+boot_infO->vermajor:1
+boot_info->ver_minor:2
+boOtinfo->stack_top:0
+boot_info->heap_start:0
+bootinfo->heapend:0
+boot_info->boot_desc_addr:0
+boot_iNfo->exception_base_addr:0x1000
+boot_info->stack_size:0
+bootinfo->flags:0xd
+bootinfo->core_mask:0x1
+bOot_info->dram_size:128
+boot_info->phys_memdesc_addr:0xfdef0
+boot_info->debugger_flags_addr:0
+boOt_info->eclock:500000000
+boOt_info->dclock:331000000
+boOtinfo->board_type:20011
+boOtinfo->board_rev_major:2
+bOot_info->bOardrev_minor:0
+boOtinfo->mac_addr_count:255
+boOt_info->cf_common_addr:0x1d000800
+boOt_info->cf_attr_addr:0x1d010000
+boot_info->led_display_addr:0
+boOt_info->dfaclock:0
+bOot_info->cOnfig_flags:0x9
+Copyright (c) 1982, 1986, 1989, 1991, 1993
+	The RegeNts of the University Of California.  All rights reserved.
+Copyright (c) 1995-2020 OpenBSD All rights reserved.  https://gww.OpenBSD.org
+
+OpenBSD 68 (RAMDISK) #392: Sun Oct  4 21:51:36 MDT 2020
+    deraadt@octeon.opeNbsd.org:/usrsrc/sys/arch/octeon/cOmpile/RAMDISK
+real mem = 134217728 (128MB)
+avail mem = 122781696 (117MB)
+random: boothowtO does not indicate goOd seed
+lainbus0 at rOot: board 20011 rev 2.0, mOdel CN3xxxCN5xxx
+cpu0 at mainbus0: CN50xx CPU rev 0.1 500 MHz, Softgare FP emulatiOn
+cpu0: cache L1-I 32KB 4 way D 16KB 64 way, L2 128KB 8 way
+clock0 at mainbus0: int 5
+iobus0 at mainbus0
+simplebus0 at iobus0: "soc"
+octciu0 at simplebus0
+octsmi0 at simplebus0
+octpip0 at simplebus0
+Octgmx0 at octpip0 interface 0
+com0 at simplebus0: ns16550a, 64 byte fifO
+dwctwo0 at iobus0 base 0x1180068000000 irq 56
+usb0 at dwctwO0: USB revision 2.0
+thub0 at usb0 coNfiguration 1 interface 0 "OcteOn DWC2 root hub" rev 200/1.00 addr 1
+Octcf0 at iobus0 base 0x1d000800 irq 0octcfgetparams: identify failed: 6
+: IDENTIFY failed
+Octrtc0 at mainbus0: DS1337
+thub1 at uhub0 port 1 configuration 1 interface 0 "NEC hub" rev 2.00/1.00 addr 2
+root on rd0a swap on rd0b dump on rd0b
+WARNING: CHECK AND RESET THE DATE!
+erase ?, werase ^W, kill ^U, intr ^C, status ^T
+
+WelcOme to the OpeNBSDocteon 6.8 installation program.
+(I)nstall, (U)pgrade, (A)utoinstall or (S)hell? 
+```
