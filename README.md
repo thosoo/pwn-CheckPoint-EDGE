@@ -40,8 +40,8 @@ This applies to the UTM-1 EDGE NW ADSL:
 | ----------------------------- | ------------------ |
 | Cavium Octeon Plus CN5010-SCP | Processor          |
 | Marvell 98DX-LKJ1             | Switch             |
-| Marvell 88E1240-TAH2          | WAN                |
-| Marvell 88E1111-BAB1          | WAN?               |
+| Marvell 88E1240-TAH2          | PHY -> Switch      |
+| Marvell 88E1111-BAB1          | WAN2/DMZ           |
 | Spansion S29AL016J70TFI02     | Flash              |
 | ST 3243EC                     | RS-232             |
 | NEC (uPD)720114               | USB 2.0            |
