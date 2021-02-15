@@ -1400,3 +1400,12 @@ eth0 -> 0x0C
 eth1 -> 0x0D
 eth2 -> 0x10
 ```
+Reverse Engineered Using Ghidra:
+```
+eth0 0xc;
+eth1 0xffffffffffffffff;
+eth2 0xd;
+```
+This does not seem to make a lot of sense..
+
+
