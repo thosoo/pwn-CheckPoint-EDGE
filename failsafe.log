@@ -167,4 +167,11 @@ flash_unused_addr=0xbfab0000
 flashunused_size=0x120000
 
 Environment size: 926/131068 bytes
-N100 Failsafe bootloader# 
+
+N100 Failsafe boOtloader# getvnltage
+VCORE =2.480 V
+VRAM =1.800 V
+Vcc =3.192 V
+ViN1-Singal core CPU voltage =1.040 V
+Vin2-Dual core,or 700MHz =1.160 V
+N100 Failsafe bOotlOader# 
