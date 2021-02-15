@@ -1407,5 +1407,13 @@ eth1 0xffffffffffffffff;
 eth2 0xd;
 ```
 This does not seem to make a lot of sense..
-
+```
+puVar5 = cvmx_sysinfo_get();
+      lVar10 = (uVar15 + uVar11 * 0x1000000) * 8;
+      if (*(short *)(puVar5 + 0x40) != 0x4e2b) {
+        *(undefined8 *)(&DAT_80011800b0000048 + lVar10) = 0x10;
+        *(undefined8 *)(&DAT_80011800b0000020 + lVar10) = 0x10;
+      }
+```
+`ASX TX&RX = 0x10`
 
