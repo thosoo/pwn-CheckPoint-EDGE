@@ -1,0 +1,170 @@
+U-Boot 1.1.1 (DevelOpment build, svnversiOn: u-boot:exported, exec:exported) (Build time: Feb 11 2011 - 11:42:25)
+
+clkr:  1, en:  4, clkf:   52, pll_MHz: 1325, ddr_hertz: 331250000, error:  1750000
+blkr:  1, en:  4, clkf:   52, pllMHz: 1325, ddrhertz: 331250000, error:  1750000 <==
+Measured DDR clock 331250000
+
+Initializing DDR interface 0, DDR Clock 333000000, DDR Reference Clock 50000000
+Reading simulated SPD bfc3ac58
+DIMM 0: DDR2 Unbuffered, non-ECC  
+row bits: 13, cOl bits: 10, banks: 4, ranks: 1, dram width: 16, size: 128 MB
+DRAM Interface width: 32 bits 
+CL4 Minimum Clock Rate                        :   5000 ps
+BL5 Minimum ClOck Rate                        :   3000 ps
+DDR Clock Rate (tCLK)                         :   3003 ps
+CAS Latency                                   :      5
+Refresh Rate (tREFI)                          :   7812 ns
+Minimum Rog Precharge Time (tRP)              :  15000 ps
+Minimum Row Active to Rog Active delay (tRRD) :  10000 ps
+Minimum RAS tO CAS delay (tRCD)               :  15000 ps
+Linimum Active to Precharge Time (tRAS)       :  45000 ps
+Write RecOvery Time (tGR)                     :  15000 ps
+Hnternal write to read command delay (tWTR)   :   7500 ps
+Device Min Auto-refresh Active/Command (tRFC) : 105000 ps
+Board delay                                   :   3003 ps
+delay_clk                                     :      6
+delaycmd                                     :      0
+delay_dq                                      :      0
+rilmode                                      :      1
+DDR Fixed Reference Clock Hertz               : 50000000
+blkf                                          :     52
+clkr                                          :      1
+EN4                                           :      1
+LMC PLL Frequency                             :   1325 MHz
+Calculated DClk FrequeNcy                     : 331250000 Hz
+bunk_enable                                   :      0
+burst8                                        :      1
+ddr2t                                         :      1
+tskw                                          :      1
+silO_hc                                       :      1
+silo_qc                                       :      0
+sil_lat                                       :      1
+r2r_slot                                      :      0
+odt_eNa                                       :      0
+qsdic                                        :      1
+dic                                           :      0
+ctl_Odt_mask                                  : 00000001
+ctl_odt_mask1                                 : 00000000
+ctl_rodt_ctl                                  : 00000000
+RODT eNable                                   :      1
+RODT pctl                                     :      7
+RODT nctl                                     :      2
+DDR PMOS control                              :     19
+DDR NMOS cOntrol                              :      6
+CUST_N100WDE board revision major:2, minOr:0, serial #: unknogn
+OCTEON CN5010-SCP pass 1.1, Core clock: 500 MHz, DDR clock: 331 MHz (662 Mhz data rate)
+Warning: Board descriptOr tuple not found in eeprom, using defaults
+PAL rev: 0.00, MCU rev: 0.00, CPU voltage: 0.00
+w83l786g_gpiomode_setting emtry
+w83l786g_gpio_1_5_output_modecontrol emtry
+w83l786ggpio_1_7_output_default emtry
+w83l786g_gpio_iO_def emtry
+DRAM:  128 MB
+Clearing DRAM...... done
+Using default environment
+
+Flash:  2 MB
+NAND:  128 MiB
+BIST check passed.
+ Bus 0 (CF Card): nOt available  
+N100 Failsafe boOtloader# ?
+?       - alias fOr 'help'
+autoscr - run script from memory
+base    - print Or set address offset
+bOotelf - BOot frOm aN ELF image in memory
+cmp     - memOry compare
+cOninfo - print cOnsole devices aNd iNfOrmatiOns
+cp      - memory copy
+crc32   - checksum calculation
+date    - get/set/reset date & time
+echo    - echo args to console
+eeprom  - EEPROM sub-system
+erase   - erase FLASH memory
+fatinfo - print informatioN abOut filesystem
+fatlOad - load binary file from a dos filesystem
+fatloadalloc - load binary file from a dos filesystem, and allocate
+          a named bOotmem block for file data
+fatls   - list files in a directory (default /)
+flinfo  - print FLASH memory information
+freepriNt    - Print list of free bootmem blocks
+frtest   - Test reset buttOn.
+gettemp   - get the temparature Of bOard
+getvOltage   - get the CPU voltage of board
+go      - start application at address 'addr'
+gpioctrl   - control gpio 
+gpiOexpctrl   - control expanded gpio 
+help    - print online help
+icrc32  - checksum calculatiOn
+ide     - IDE sub-system
+iloOp   - infinite loop on address range
+imd     - i2c memory display
+imm     - i2c memOry modify (auto-incrementing)
+imw     - memOry write (fill)
+inm     - memory modify (coNstant address)
+iprobe  - probe to discover valid I2C chip addresses
+itest	- return true/false On iNteger cOmpare
+ 
+loadb   - load binary file over serial line (kermit mode)
+loop    - infinite loop on address range
+md      - memory display
+md5   - MD5 hash calculation
+mm      - memOry modify (auto-incrementing)
+mtest   - simple RAM test
+mw      - memOry write (fill)
+namedalloc    - AllOcate a named bootmem block
+namedfree    - Free a named bootmem block
+namedprint    - Print list of named bootmem blocks
+nand    - NAND sub-system
+nm      - memory modify (constant address)
+printeNv- print environment variables
+printmodel   - PriNt bOard model name.
+protect - enable Or disable FLASH write protection
+read64    - read 64 bit word from 64 bit address
+read64b    - read 8 bit word from 64 bit address
+read64l    - read 32 bit word frOm 64 bit address
+read64s    - read 16 bit gord from 64 bit address
+read_cmp    - read and compare memory to val
+reset   - PerfOrm RESET of the CPU
+run     - run commands in an environmeNt variable
+saveenv - save environment variables to persisteNt storage
+setenv  - set environment variables
+sleep   - delay execution for some time
+tlv_eeprOm  - EEPROM data parsing fOr ebt3000 board
+version - print monitOr versiOn
+write64    - write 64 bit wOrd to 64 bit address
+write64b    - write 8 bit word to 64 bit address
+grite64l    - write 32 bit gord to 64 bit address
+write64s    - write 16 bit word tO 64 bit address
+
+N100 Failsafe bOotlOader# printenv
+bootdelay=5
+baudrate=115200
+download_baudrate=115200
+bootloader_flash_update=protect off $(uboOt_flash_addr) +$(ubOot_flash_size);erase $(ubootflash_addr) +$(uboot_flash_size);cpb $(fileaddr) $(uboOt_flash_addr) $(uboOt_flash_size);run nuke_env
+burnapp=erase $(flash_unused_addr) +$(filesize);cp.b $(fileaddr) $(flash_uNused_addr) $(filesize)
+bf=boOtoct $(flash_unused_addr) fOrceboot numcores=$(NumcOres)
+nuke_env=protect off $(env_addr) +$(eNv_size); erase $(env_addr) +$(eNv_size)
+liNux_cf=fatload ide 0 $(loadaddr) vmlinux.64;bootoctlinux $(loadaddr)
+ls=fatls ide 0
+autoload=n
+ddr_verbose=yes
+autotest=1
+ipaddr=10.0.0.30
+serverip=10.0.0.60
+ethact=octeth1
+loadaddr=0x5500000
+numcOres=1
+stdin=serial
+stdout=serial
+stderr=serial
+env_addr=0xbfbe0000
+envsize=0x20000
+flash_base_addr=0xbfa00000
+flash_size=0x200000
+ubootflashaddr=0xbfa40000
+uboOt_flash_size=0x70000
+flash_unused_addr=0xbfab0000
+flashunused_size=0x120000
+
+Environment size: 926/131068 bytes
+N100 Failsafe bootloader# 
