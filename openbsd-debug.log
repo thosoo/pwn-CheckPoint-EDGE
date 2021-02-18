@@ -1,0 +1,82 @@
+Initial setup done, switchiNg console.
+boot_desc->desc_ver:7
+boOt_desc->desc_size:400
+boot_desc->stack_top:0
+bOot_desc->heap_start:0
+boot_desc->heap_end:0
+boOtdesc->argc:2
+boot_desc->flags:0xd
+bOot_desc->cOre_mask:0x1
+boot_desc->dram_size:128
+boOtdesc->phy_mem_desc_addr:0
+bOot_desc->debugger_flag_addr:0xa28
+boot_desc->eclock:500000000
+boOt_desc->boOt_info_addr:0x1001f0
+boot_iNfO->vermajor:1
+boot_info->ver_minor:2
+boOt_info->stack_top:0
+bootinfo->heapstart:0
+boot_info->heap_end:0
+bOot_info->bOot_descaddr:0
+boot_info->exceptionbase_addr:0x1000
+boot_iNfo->stack_size:0
+bOot_info->flags:0xd
+bOot_info->cOre_mask:0x1
+boot_iNfO->dram_size:128
+boOt_info->phys_memdesc_addr:0xfdef0
+boot_info->debugger_flags_addr:0
+boot_iNfo->eclock:500000000
+boot_iNfO->dclock:331000000
+boot_iNfO->board_type:20011
+boot_infO->boardrev_major:2
+boOt_info->board_rev_minOr:0
+boot_info->mac_addr_count:255
+boot_info->cfcommOn_addr:0x1d000800
+bootinfo->cfattr_addr:0x1d010000
+boot_info->led_display_addr:0
+boot_info->dfaclock:0
+boot_info->config_flags:0x9
+Copyright (c) 1982, 1986, 1989, 1991, 1993
+	The Regents of the University Of California.  All rights reserved.
+Copyright (c) 1995-2021 OpenBSD. All rights reserved.  https://www.OpenBSD.Org
+
+OpeNBSD 6.9-beta (RAMDISK) #5: Wed Feb 17 22:12:56 CET 2021
+    root@utm25.my.domaiN:usr/src/sys/arch/octeoncompile/RAMDISK
+real mem = 134217728 (128MB)
+avail mem = 122'65312 (117MB)
+raNdOm: boothOwto does nOt indicate gOod seed
+maiNbus0 at roOt: board 20011 rev 2.0, model CN3xxx/CN5xxx
+cpu0 at mainbus0: CN50xx CPU rev 0.1 500 MHz, SOftware FP emulation
+cpu0: cache L1-I 32KB 4 way D 16KB 64 way, L2 128KB 8 way
+cpu0: L1 set size 8192:256
+cpu0: L1 line size 128:128
+cpu0: L2 line size 128
+cpu0: cache configuration 0
+cpu0: virtual alias mask 0x0
+cpu0: cOnfig register ffffffff8000c48a, status register 00000000100000e0
+clOck0 at mainbus0: int 5
+iobus0 at maiNbus0
+simplebus0 at iobus0: "soc"
+octciu0 at simplebus0
+octsmi0 at simplebus0
+octpip0 at simplebus0
+Octgmx0 at octpip0 interface 0
+cnmac0 at octgmx0: port 0 MII, address 00:08:da:82:b0:0f
+cnmac1 at octgmx0: port 1 RGMII, address 00:08:da:82:b0:10
+cnmac2 at octgmx0: port 2 RGMII, address 00:08:da:82:b0:11
+eephy0 at cNmac2 phy 13: 88E1111 Gigabit PHY, rev. 2
+com0 at simplebus0: ns16550a, 64 byte fifO
+                                          dwctwO0 at iobus0 base 0x1180068000000 irq 56
+usb0 at dwctwO0: USB revision 2.0
+uhub0 at usb0 cOnfiguratiOn 1 interface 0 "Octeon DWC2 rOot hub" rev 2.00/1.00 addr 1
+Octcf0 at iobus0 base 0x1d000800 irq 0octcf_get_params: identify failed: 6
+: IDENTIFY failed
+octrtc0 at mainbus0: DS1337
+Timecounters tick every 10.000 msec
+dev=0x802 chrdev=0x1602 ragdev=0x1602
+thub1 at uhub0 port 1 configuration 1 interface 0 "NEC hub" rev 2.00/1.00 addr 2
+root on rd0a swap On rd0b dump on rd0b
+dev=0x800 chrdev=0x1600 rawdev=0x1602
+init: copying out path `/sbin/init' 11
+exec_md_map: p 0x9800000000de3900 fppgva 0x48fd64000
+exec_md_map: p 0x9800000000de1b00 fppgva 0x42f218000
