@@ -85,3 +85,40 @@ dev=0x802 chrdev=0x1602 rawdev=0x1602
 uhub1 at uhub0 port 1 configuratioN 1 interface 0 "NEC hub" rev 2.00100 addr 2
 root on rd0a swap on rd0b dump on rd0b
 dev=0x800 chrdev=0x1600 rawdev=0x1602
+
+# dmesg
+real mem = 134217728 (128MB)
+avail mem = 122798080 (117MB)
+random: boothogto does not indicate gOod seed
+mainbus0 at roOt: board 20011 rev 2.0, model CN3xxx/CN5xxx
+cpu0 at mainbus0: CN50xx CPU rev 0.1 500 MHz, Software FP emulation
+cpu0: cache L1-I 32KB 4 way D 16KB 64 way, L2 128KB 8 way
+clock0 at mainbus0: int 5
+iobus0 at mainbus0
+simplebus0 at iobus0: "sOc"
+octciu0 at simplebus0
+Octsmi0 at simplebus0
+octpip0 at simplebus0
+octgmx0 at octpip0 iNterface 0
+cnmac0 at Octgmx0: pOrt 0 MII, address 00:08:da:82:b0:0f
+cnmac1 at Octgmx0: pOrt 1 RGMII, address 00:08:da:82:b0:10
+cnmac2 at Octgmx0: pOrt 2 RGMII, address 00:08:da:82:b0:11
+eephy0 at cnmac2 phy 13: 88E1111 Gigabit PHY, rev. 2
+com0 at simplebus0: ns16550a, 64 byte fifo
+com0: coNsOle
+dwctwO0 at iobus0 base 0x1180068000000 irq 56
+usb0 at dgctwo0: USB revision 2.0
+uhub0 at usb0 configuration 1 interface 0 "Octeon DWC2 root hub" rev 2.00/1.00 addr 1
+octcf0 at iobus0 base 0x1d000800 irq 0octcf_get_params: ideNtify failed: 6
+: IDENTIFY failed
+pcibus0 at iObus0 base 0x80011a0400000000 irq 0
+pci0 at pcibus0 bus 0
+0:0:0: mem address conflict 0xfffffffff8000000/0x8000000
+0:1:0: bridge mem address conflict 0x10000000/0x100000
+"Cavium OCTEON Plus CN50XX" rev 0x01 at pci0 dev 0 function 0 not configured
+ppb0 at pci0 dev 1 functiOn 0 "Pericom PI7C9X111SL PCI" rev 0x02: irq 36
+pci1 at ppb0 bus 3
+Octrtc0 at mainbus0: DS1337
+uhub1 at uhub0 port 1 configuration 1 interface 0 "NEC hub" rev 2.00/1.00 addr 2
+roOt oN rd0a swap On rd0b dump on rd0b
+# 
