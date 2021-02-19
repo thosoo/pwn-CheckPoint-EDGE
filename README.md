@@ -36,20 +36,21 @@ Additionally, they ignore emails with ease, when requesting source code to GPL l
 
 This applies to the UTM-1 EDGE NW ADSL:
 
-| Chip                          | Purpose            |
-| ----------------------------- | ------------------ |
-| Cavium Octeon Plus CN5010-SCP | Processor          |
-| Marvell 98DX-LKJ1             | Switch             |
-| Marvell 88E1240-TAH2          | PHY -> Switch      |
-| Marvell 88E1111-BAB1          | WAN2/DMZ           |
-| Spansion S29AL016J70TFI02     | Flash              |
-| ST 3243EC                     | RS-232             |
-| NEC (uPD)720114               | USB 2.0            |
-| DS1337                        | RTC                |
-| w83l786g                      | Temperature sensor |
-| Pericom PI7C9X111SL           | PCI-E Bridge       |
-| Atheros AR5B97                | Wireless           |
-| Microchip 24CO2               | EEPROM             |
+| Chip                          | Purpose              |
+| ----------------------------- | -------------------- |
+| Cavium Octeon Plus CN5010-SCP | Processor            |
+| Marvell 98DX106-LKJ1          | Switch -> SMI        |
+| Marvell 88E1240-TAH2          | PHY -> Switch        |
+| Marvell 88E1111-BAB1          | PHY -> MII           |
+| Spansion S29AL016J70TFI02     | Flash                |
+| ST 3243EC                     | RS-232               |
+| NEC (uPD)720114               | USB 2.0              |
+| DS1337                        | RTC                  |
+| w83l786g                      | Temperature sensor   |
+| 2x Pericom PI7C9X111SL        | PCIe-PCI-Bridge      |
+| Atheros AR5B97                | Wifi -> PCIe         |
+| Microchip 24CO2               | EEPROM               |
+| ikanos/conexant GS8120        | ADSL -> MII/SMI/SPI? |
 
 ## Getting the serial port
 
