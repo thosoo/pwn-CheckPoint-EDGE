@@ -1271,7 +1271,7 @@ DECIMAL       HEXADECIMAL     DESCRIPTION
 Looking at U-Boot strings, you can see at the end of the file that there is a `sw_linux_cmdline` string. This suggests, that you can inject commands into the linux command line. Setting the environment variable`setenv sw_linux_cmdline 'init=/bin/sh'` finally gained root access.
 
 ```sh
-Sbox4_cm# sw_linux_cmdline 'init=/bin/sh'
+Sbox4_cm# setenv sw_linux_cmdline 'init=/bin/sh'
 Sbox4_cm# sofaware_start
 ...
 Linux version 2.6.27.7-Cavium-Octeon (rapson@apu.sofaware.com) (gcc version 4.3.3 (Cavium Networks Version: 1_9_0 build 80) ) #4 SMP Thu Jan 20 14:03:04 IST 2011
