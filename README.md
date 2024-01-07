@@ -1299,6 +1299,152 @@ Arr0w            (root)
 
 Nice password, Check Point.
 
+Note that there is another passwd file found in the same directory under ´/etc/-passwd´.
+
+Running ´/sbin/rc´ will continue initialization and activate sofaware and network interfaces.
+
+```
+/ $ /sbin/rc 
+/sbin/rc starting
+Mounting file systems
+fsck 1.38 (30-Jun-2005)
+Set date by real time clock
+time-stamp 1.1: 13:18:44 (1637846324 sec)
+Start reset button daemon
+Mount /flash
+Create /var/tmp/
+Create /var/log/
+Create /var/run/utmp
+Create /var/etc/hostap
+Create /var/etc/wpa_supplicant
+Create /var/etc/ppp
+Create /var/lock
+Create /var/etc/mgetty+sendfax
+Setting up loopback
+Disabling IP forwarding
+vpnt: module license 'unspecified' taints kernel.
+VPNT: IPv4 over VPN Tunnel driver installed
+Pre-Initialization is done for the device 0x23.
+Pre-Initialization is done for the device 0xc.
+Arrow Switch+Phy driver installed
+ath_hal: 0.9.17.1 (AR5212, AR5416, RF5111, RF5112, RF2413, RF5413, RF2316, RF2317, DEBUG, REGOPS_FU)
+wlan: 0.8.4.2 (Atheros/multi-bss)
+ath_rate_atheros: Copyright (c) 2001-2005 Atheros Communications, Inc, All Rights Reserved
+ath_dev: Copyright (c) 2001-2007 Atheros Communications, Inc, All Rights Reserved
+ath_pci: 0.9.4.5 (Atheros/multi-bss)
+PCI: Enabling device 0000:01:00.0 (0000 -> 0002)
+wifi0: Atheros 9287: mem=0x11b00f0000000, irq=44 hw_base=0x90011b00f0000000
+wlan: mac acl policy registered
+Create wlan0 interface
+/sbin/config_wlan.sh: /sbin/config_wlan.sh: 3: wlanconfig: not found
+wlan0: unknown interface: No such device
+wlan0: unknown interface: No such device
+<00:00:00>KDebug/0: Loading SofaWare Kernel Module
+time-stamp 1.2: 13:18:47 (1637846327 sec)
+starting Safe@...
+Start sofaware watch dog v2
+run safeAtHome!!!!
+time-stamp 1.3: 13:18:47 (1637846327 sec)
+/ $ <00:00:00>KDebug/0: fw_open called 300
+<00:00:00>UInfo.: mac address of interface eth1 is 00:08:da:82:b0:11
+<00:00:00>UInfo.: mac address of interface eth0 is 00:08:da:82:b0:0f
+<00:00:00>UInfo.: Unable to get the mac address of interface 
+<00:00:00>UInfo.: Unable to get the mac address of interface wlan0
+<00:00:00>UInfo.: mac address of interface lo:1 is 00:00:00:00:00:00
+<00:00:00>UInfo.: Unable to get the mac address of interface 
+<00:00:00>UInfo.: mac address of port eth1 is 00:08:da:82:b0:11
+<00:00:00>UInfo.: mac address of port eth2 is 00:08:da:82:b0:10
+<00:00:00>UInfo.: Unable to get the mac address of port wlan0
+<00:00:00>UInfo.: mac address of port eth0 is 00:08:da:82:b0:0f
+<00:00:00>UInfo.: mac address of port eth0<13:18:47>KInfo./0:  is 00:08:da:82:b0:0f
+<00:00:00>UInfo.: mac address of port ethInitXAlloc: Allocating 25600K of core memory  - Suceeded
+0 is 00:08:da:82:b0:0f
+<00:00:00>UInfo.: mac address of port et<13:18:47>KInfo./0: h0 is 00:08:da:82:b0:0f
+<00:00:00>UDebug: Vendor mask: 8192 (0xFW1 Initialization Started
+00002000)
+<00:00:00>UDebug: Sub model: 0x000000c0
+<00:00:00>UI<13:18:47>KInfo./0: nfo.: SW Initialization Started...
+<00:00:00>UInfo.: PlatformInCheckRAM(before fw_drv_ini)
+itEpilog: Set ip forward off
+<00:00:00>UDebug: SW Platform Prol<13:18:47>KInfo./0: og Completed
+<00:00:00>UInfo.: User Memory Pool Size Param = 40CheckRAM(after fw_drv_ini)
+94K
+<00:00:00>UInfo.: Kernel Memory Pool Size Param = 25600K
+<<13:18:47>KInfo./0: 00:00:00>UInfo.: Vendor Specific String Param = 'SBox-200-C'
+<0FW1 Initialization Completed
+0:00:00>UInfo.: Vendor Version String Param = '1.4C'
+registering SW classifierg/0: UInfo.: InitXAlloc: Allocating 4094K of core memory  - Suceeded
+
+<13:18:47>UDebug: Loading persistent data 'VersionString': (current version=8.2.33n, stored version)
+<13:18:47>UDebug: Loading persistent data 'ModemVersionString': (current version=SW2.0.11b, stored )
+<13:18:47>UDebug: No configuration file present 
+<13:18:47>UDebug: sw_ifc_unassign_port ifc=1 port=3 ports mask=0x78
+<13:18:47>UDebug: sw_ifc_unassign_port ifc=1 port=4 ports mask=0x70
+<13:18:47>UDebug: sw_ifc_unassign_port ifc=1 port=5 ports mask=0x60
+<13:18:47>UDebug: sw_ifc_unassign_port ifc=1 port=6 ports mask=0x40
+<13:18:47>UDebug: sw_ifconfig_raw eth0 0.0.0.0 down
+<13:18:47>UDebug: system: ifconfig eth0 0.0.0.0
+<13:18:47>UDebug: system: ifconfig eth0 down
+<13:18:48>KInfo./0: CheckRAM(before fw_chain_ini)
+<13:18:48>KInfo./0: CheckRAM(after fw_chain_ini)
+<13:18:48>KDebug/0: FW-1: 2 interfaces installed
+<13:18:47>UDebug: XInterfaces: destroy ifc=1
+<13:18:47>UDebug: system: ifconfig eth0 -promisc
+<13:18:47>UDebug: ifconfig eth0 -promisc
+<13:18:47>UDebug: system: ifconfig eth0 up
+<13:18:47>UDebug: sw_ifconfig_raw eth0 0.0.0.0 up
+<13:18:47>UDebug: system: ifconfig eth0 up
+<13:18:48>KInfo./0: CheckRAM(before fw_chain_ini)
+<13:18:48>KInfo./0: CheckRAM(after fw_chain_ini)
+<13:18:48>KDebug/0: FW-1: 1 interfaces installed
+<13:18:47>UDebug: sw_ifc_assign_port ifc=1 tag=0 port=3 net_mode=3 first_assignment=1
+<13:18:47>UDebug: sw_ifc_create ifc=1 tag=0 port=3 exist=0
+<13:18:47>UDebug: sw_ifc_up ifc=1 tag=0 exists=1 if_dev=eth0
+<13:18:47>UDebug: sw_ifconfig_raw eth0 192.168.10.1 up
+<13:18:47>UDebug: system: ifconfig eth0 up
+<13:18:49>KInfo./0: CheckRAM(before fw_chain_ini)
+<13:18:49>KInfo./0: CheckRAM(after fw_chain_ini)
+<13:18:49>KDebug/0: FW-1: 2 interfaces installed
+<13:18:47>UDebug: sw_ifc_assign_port ifc=1 tag=0 port=4 net_mode=3 first_assignment=0
+<13:18:47>UDebug: sw_ifc_assign_port ifc=1 tag=0 port=5 net_mode=3 first_assignment=0
+<13:18:47>UDebug: sw_ifc_assign_port ifc=1 tag=0 port=6 net_mode=3 first_assignment=0
+<13:18:49>KInfo./0: CheckRAM(before fw_chain_ini)
+<13:18:49>KInfo./0: CheckRAM(after fw_chain_ini)
+<13:18:49>KDebug/0: FW-1: 2 interfaces installed
+<13:18:49>KDebug/0: FW-1: 2 interfaces installed
+<13:18:47>UDebug: sw_ifconfig_raw eth2 0.0.0.0 up
+<13:18:47>UDebug: system: ifconfig eth2 up
+<13:18:49>KInfo./0: CheckRAM(before fw_chain_ini)
+<13:18:49>KInfo./0: CheckRAM(after fw_chain_ini)
+<13:18:49>KDebug/0: FW-1: 2 interfaces installed
+<13:18:47>UDebug: sw_port_apply_dmz_config ifc=2 qua=-1
+<13:18:47>UDebug: sw_ifc_assign_port ifc=2 tag=0 port=1 net_mode=3 first_assignment=1
+<13:18:47>UDebug: sw_ifc_create ifc=2 tag=0 port=1 exist=0
+<13:18:47>UDebug: sw_ifc_up ifc=2 tag=0 exists=1 if_dev=eth2
+<13:18:47>UDebug: sw_ifconfig_raw eth2 192.168.253.1 up
+<13:18:47>UDebug: system: ifconfig eth2 up
+<13:18:49>KInfo./0: CheckRAM(before fw_chain_ini)
+<13:18:49>KInfo./0: CheckRAM(after fw_chain_ini)
+<13:18:49>KDebug/0: FW-1: 3 interfaces installed
+<13:18:49>KInfo./0: CheckRAM(before fw_chain_ini)
+<13:18:49>KInfo./0: CheckRAM(after fw_chain_ini)
+<13:18:49>KDebug/0: FW-1: 3 interfaces installed
+<13:18:47>UDebug: sw_ifc_apply_wan_assignment wan_ifc=0 wan_port=3 port=0 tag=0
+<13:18:47>UDebug: sw_ifc_unassign_port ifc=0 port=0 ports mask=0x1
+<13:18:47>UDebug: sw_ifconfig_raw eth1 0.0.0.0 down
+<13:18:47>UDebug: system: ifconfig eth1 0.0.0.0
+<13:18:47>UDebug: system: ifconfig eth1 down
+<13:18:49>KInfo./0: CheckRAM(before fw_chain_ini)
+<13:18:49>KInfo./0: CheckRAM(after fw_chain_ini)
+<13:18:49>KDebug/0: FW-1: 3 interfaces installed
+<13:18:47>UDebug: XInterfaces: destroy ifc=0<13:18:49>KDebug/0: 
+<13:18:47>UDebug: sw_ifc_apply_wan_assignment wan_ifc=5 wan_poksw_var_set_ppp_config: ClientIP: 0.00
+rt=0 port=-1 tag=0
+<13:18:47>UDebug: XServices_AllocateIdle: al<13:18:49>KDebug/0: located idle handler 0 succeeded (n0
+11662c)
+<13:18:47>UDebug: ADSL modem service started
+```
+
 ## Booting OpenBSD
 
 At first, I thought booting OpenBSD was not possible on this device, as no output was seen after booting the OpenBSD RAMDISK. Then, after checking the external serialport, the following was observed:
