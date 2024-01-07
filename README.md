@@ -1299,9 +1299,9 @@ Arr0w            (root)
 
 Nice password, Check Point.
 
-Note that there is another passwd file found in the same directory under ´/etc/-passwd´.
+Note that there is another passwd file found in the same directory under `/etc/-passwd`.
 
-Running ´/sbin/rc´ will continue initialization and activate sofaware and network interfaces.
+Running `/sbin/rc` will continue initialization and activate sofaware and network interfaces.
 
 ```
 / $ /sbin/rc 
